@@ -56,6 +56,9 @@ Extra :
 * Elle prend également en charge LegacyFuel (défini dans la configuration).
 
 
+EN :
+
+
 Here is a Gofast for Fivem with RageUI menu
 Fully customizable thanks to the config.
 Developed and tested under ESX 1.9.4
