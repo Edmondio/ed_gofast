@@ -5,10 +5,7 @@ CREATE TABLE IF NOT EXISTS `ed_gofast` (
 INSERT INTO `ed_gofast` (`count`) VALUES
 	(10);
 
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('Sac_de_weed', 'Sac de weed', 1, 0, 1);
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('Sac_de_coke', 'Sac de coke', 1, 0, 1);
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('Sac_de_opium', 'Sac d\'opium', 1, 0, 1);
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('Sac_de_meth', 'Sac de meth', 1, 0, 1);
-
-
-
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('Sac_weed', 'Sac de weed', 1, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('Sac_coke', 'Sac de coke', 1, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('Sac_opium', 'Sac d\'opium', 1, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('Sac_meth', 'Sac de meth', 1, 0, 1);
