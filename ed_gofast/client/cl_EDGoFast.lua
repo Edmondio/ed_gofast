@@ -68,7 +68,7 @@ local npcs = {
 					if nogofast == 1 then
 						gofastmenu()
 					else
-						ESX.ShowAdvancedNotification("", "~b~Inconnu", "Tu te fous de moi ? Termine le boulot avant !", "CHAR_MULTIPLAYER", 7)
+						ESX.ShowAdvancedNotification("", "~b~Inconnu", "Pas de stock dispo pour toi, reviens plus tard", "CHAR_MULTIPLAYER", 7)
 					end
 				else
 					ESX.ShowAdvancedNotification("", "~b~Inconnu", "Pas de stock reviens plus tard", "CHAR_MULTIPLAYER", 7)
