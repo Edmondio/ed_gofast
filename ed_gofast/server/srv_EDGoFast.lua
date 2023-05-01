@@ -115,8 +115,13 @@ AddEventHandler('ed_gofast:renfort', function()
         local thePlayer = ESX.GetPlayerFromId(xPlayers[i])
         for j = 1, #Config.JobsPolice do
             if thePlayer.job.name == Config.JobsPolice[j] then
-                TriggerClientEvent('esx:showAdvancedNotification', xPlayers[i], 'LSPD INFORMATIONS', '~r~GoFast en cours', 'D\'après notre indic un Gofast est en cours, envoie du signal GPS', 'CHAR_ABIGAIL', 8)
-                break
+                if Config.GKSphone then
+                    TriggerClientEvent("gksphonestart", source)
+                    break
+                else
+                    TriggerClientEvent('esx:showAdvancedNotification', xPlayers[i], 'LSPD INFORMATIONS', '~r~GoFast en cours', 'D\'après notre indic un Gofast est en cours, envoie du signal GPS', 'CHAR_ABIGAIL', 8)
+                    break
+                end  
             end
         end
     end
@@ -130,11 +135,14 @@ AddEventHandler('ed_gofast:stoprenfort', function()
      for i = 1, #xPlayers, 1 do
           local thePlayer = ESX.GetPlayerFromId(xPlayers[i])
           for j = 1, #Config.JobsPolice do
-               if thePlayer.job.name == Config.JobsPolice[j] then
-                    TriggerClientEvent('esx:showAdvancedNotification', xPlayers[i], 'LSPD INFORMATIONS', '~r~Perte GoFast en cours', 'On a perdu le signal GPS ! '.. emp_vente, 'CHAR_ABIGAIL', 8)
-                    break
-               end
-          end
+            if Config.GKSphone then
+                TriggerClientEvent("gksphonestop", source)
+                break
+            else
+                TriggerClientEvent('esx:showAdvancedNotification', xPlayers[i], 'LSPD INFORMATIONS', '~r~Perte GoFast en cours', 'On a perdu le signal GPS ! '.. emp_vente, 'CHAR_ABIGAIL', 8)
+                break
+            end
+        end
      end
 end)
 
@@ -204,3 +212,4 @@ AddEventHandler('ed_gofast:venteDrogueSeul', function(itemName, saleQty)
         xPlayer.addAccountMoney(Config.TypeArgent, totalPrice)
     end
 end)
+
