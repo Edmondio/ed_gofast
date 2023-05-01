@@ -590,3 +590,14 @@ RegisterNetEvent('ed_gofast:giveDrogueSuccess')
 AddEventHandler('ed_gofast:giveDrogueSuccess', function(success)
     isDrogueGiven = success
 end)
+
+-- GESTION DU GKS Phone
+RegisterNetEvent("gksphonestart")
+AddEventHandler("gksphonestart", function()
+	exports["gksphone"]:JobDispatch("D\'après notre indic un Gofast est en cours, envoie du signal GPS", "", Config.GKSJobs, false)
+end)
+
+RegisterNetEvent("gksphonestop")
+AddEventHandler("gksphonestop", function()
+    exports["gksphone"]:JobDispatch("On a perdu le signal GPS ! '.. emp_vente", "", Config.GKSJobs, false)
+end)
