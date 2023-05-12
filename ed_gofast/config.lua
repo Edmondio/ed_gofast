@@ -6,9 +6,7 @@ Config = {
     PoliceMinimum = 1, -- Nombre de policier / (LSPD et BCSO) qui doivent être en ligne pour pouvoir lancer un Gofast
     LegacyFuel = false, -- Mettre sur true si vous utiliez legacyfuel pour gérer l'essence des vehciules
     KeyIntercation = 38, -- Touche utiliser pour interagir avec les pnj (par defaut E) 
-    TypeArgent = 'black_money', -- Ici pour change quel type d'argent vous voulez pour payer et pour etre payer argent sale = black_money | argent propre = money
-    GKSphone = false, -- True si vous voulez envoyé la notification aux jobs police
-    GKSJobs = "['police' , 'bcso']"
+    TypeArgent = 'black_money' -- Ici pour change quel type d'argent vous voulez pour payer et pour etre payer argent sale = black_money | argent propre = money
  }
 
  Config.JobsPolice = { 'police', 'bcso' } -- Liste des jobs pour pouvoir lancer le GoFast
@@ -18,7 +16,7 @@ Config = {
     VisibleMin = 60, -- [EN SECONDE] C'est la durée MINIMUM pendant lequel le joueur va être visible par la police ----| SI VOUS VOULEZ UNE DUREE FIXE 
     VisibleMax = 90, -- [EN SECONDE] C'est la durée MAXIMUM pendant lequel le joueur va être visible par la police ----| METTRE LA MEME VALEUR 
     Blips = 10, -- [EN SECONDE] Durée entre chaque Blips pour la police par defaut 10 secondes
-    EntreGF = 20, -- [EN MINUTES] Durée pendant lequel le joueur ne peut pas prendre de Gofast après en avoir pris un 
+    EntreGF = 10, -- [EN MINUTES] Durée pendant lequel le joueur ne peut pas prendre de Gofast après en avoir pris un 
     GFsupplementaire = 10, -- [EN MINUTES] Incremente la varaible de la BDD de +1 toutes les X minutes (MAX 10 GF)
     BlipsVendeur = 10 -- [EN MINUTES] Durée pendant laquel le blips qui affiche le vendeur reste actif.
  }
