@@ -50,15 +50,13 @@ end)
 
 -- Fin Compte le nombre de police --
 
--- Gestion des PNJS --
+-- Gestion des PNJS  table --
 
 local npcs = {
 	{
 	  model = "s_m_y_dockwork_01",
 	  coords = Config.Achat,
-	  frozen = true, --PNJ toujours activer (c'est le vendeur en même temps)
 	  reference = "Fournisseur",
-	  active = true,
 	  interaction = function()
 		ESX.TriggerServerCallback("ed_gofast:countcops", function(canRob)
 			ESX.TriggerServerCallback('ed_gofast:getCount', function(countFromServer)
@@ -80,9 +78,7 @@ local npcs = {
 	{
 	  model = "s_m_y_dockwork_01",
 	  coords = Config.Vente1,
-	  frozen = true,
 	  reference = "Vendeur1",
-	  active = true, -- 
 	  interaction = function()
 			gofastventemenu()
 		end
@@ -90,9 +86,7 @@ local npcs = {
 	{
 		model = "s_m_y_dockwork_01",
 		coords = Config.Vente2,
-		frozen = true,
 		reference = "Vendeur2",
-		active = true,
 		interaction = function()
 			gofastventemenu()
 		end
@@ -102,7 +96,6 @@ local npcs = {
 		coords = Config.Vente3,
 		frozen = true,
 		reference = "Vendeur3",
-		active = true,
 		interaction = function()
 			gofastventemenu()
 		end
@@ -110,9 +103,7 @@ local npcs = {
 	  {
 		model = "s_m_y_dockwork_01",
 		coords = Config.Vente4,
-		frozen = true,
 		reference = "Vendeur4",
-		active = true,
 		interaction = function()
 			gofastventemenu()
 		end
@@ -120,33 +111,31 @@ local npcs = {
 	  {
 		model = "s_m_y_dockwork_01",
 		coords = Config.Vente5,
-		frozen = true,
 		reference = "Vendeur5",
-		active = true,
 		interaction = function()
 			SellDrogueOnly()
 		end
 	  }
   }
 
-  -- Crer les pnjs --
+-- Crer les pnjs --
 
-  Citizen.CreateThread(function()
-    for i, npc in ipairs(npcs) do
-        if npc.active then -- Vérifier si l'attribut "active" est true
-            local npcHash = GetHashKey(npc.model)
+Citizen.CreateThread(function()
+	for i, npc in ipairs(npcs) do
+			local npcHash = GetHashKey(npc.model)
             while not HasModelLoaded(npcHash) do
                 RequestModel(npcHash)
                 Citizen.Wait(10)
             end
-            local npcPed = CreatePed(4, npcHash, npc.coords.x, npc.coords.y, npc.coords.z, npc.coords.heading, npc.frozen, true)
-            SetEntityInvincible(npcPed, true) -- rendre le PNJ invincible
-            FreezeEntityPosition(npcPed, npc.frozen) -- geler la position du PNJ
-            SetPedCanBeTargetted(npcPed, false) -- Empecher le PNJ d'être cilbé par les joueurs
-            SetPedCanRagdoll(npcPed, false) -- désactiver la possibilité que le PNJ tombe au sol ou soit étourdi
-            SetBlockingOfNonTemporaryEvents(ped, true)
-            TaskPlayAnim(ped, animation, "base", 8.0, 0.0, -1, 1, 0, 0, 0, 0)
-        end
+            local npcPed = CreatePed(4, npcHash, npc.coords.x, npc.coords.y, npc.coords.z, npc.coords.heading, false) --False chaque ped est visible par le joueur qui le créer uniquement
+			-- Rend le PED invincible
+			SetEntityInvincible(npcPed, true)
+			-- Empêche le PED de subir des dommages
+			SetEntityCanBeDamaged(npcPed, false)
+			-- Gèle la position du PED, l'empêchant de bouger
+			FreezeEntityPosition(npcPed, true)
+			-- Bloque les événements non temporaires pour le PED (Il réagit à rien)
+			SetBlockingOfNonTemporaryEvents(npcPed, true)
     end
 end)
   -- fin crer pnj --
@@ -159,7 +148,6 @@ Citizen.CreateThread(function()
 	  local playerPed = PlayerPedId()
 	  local playerCoords = GetEntityCoords(playerPed)
 	  for i, npc in ipairs(npcs) do
-		if npc.active then -- Vérifier si l'attribut "active" est true
 		  local distance = #(playerCoords - vector3(npc.coords.x, npc.coords.y, npc.coords.z))
 		  if distance < 3 then
 			--ESX.ShowHelpNotification("Appuyez sur ~INPUT_CONTEXT~", 2000)
@@ -167,13 +155,12 @@ Citizen.CreateThread(function()
 			  npc.interaction() -- Appeler l'interaction spécifique du PNJ
 			end
 		  end
-		end
 	  end
 	end
   end)
 
 
--- -- Gestion des PNJS --
+-- -- Gestion des PNJS 
 
 -- MENU ACHAT --
 
@@ -589,15 +576,4 @@ end)
 RegisterNetEvent('ed_gofast:giveDrogueSuccess')
 AddEventHandler('ed_gofast:giveDrogueSuccess', function(success)
     isDrogueGiven = success
-end)
-
--- GESTION DU GKS Phone
-RegisterNetEvent("gksphonestart")
-AddEventHandler("gksphonestart", function()
-	exports["gksphone"]:JobDispatch("D\'après notre indic un Gofast est en cours, envoie du signal GPS", "", Config.GKSJobs, false)
-end)
-
-RegisterNetEvent("gksphonestop")
-AddEventHandler("gksphonestop", function()
-    exports["gksphone"]:JobDispatch("On a perdu le signal GPS ! '.. emp_vente", "", Config.GKSJobs, false)
 end)
