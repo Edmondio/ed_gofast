@@ -122,40 +122,65 @@ local npcs = {
 
 Citizen.CreateThread(function()
 	for i, npc in ipairs(npcs) do
-			local npcHash = GetHashKey(npc.model)
-            while not HasModelLoaded(npcHash) do
-                RequestModel(npcHash)
-                Citizen.Wait(10)
-            end
-            local npcPed = CreatePed(4, npcHash, npc.coords.x, npc.coords.y, npc.coords.z, npc.coords.heading, false) --False chaque ped est visible par le joueur qui le créer uniquement
-			-- Rend le PED invincible
-			SetEntityInvincible(npcPed, true)
-			-- Empêche le PED de subir des dommages
-			SetEntityCanBeDamaged(npcPed, false)
-			-- Gèle la position du PED, l'empêchant de bouger
-			FreezeEntityPosition(npcPed, true)
-			-- Bloque les événements non temporaires pour le PED (Il réagit à rien)
-			SetBlockingOfNonTemporaryEvents(npcPed, true)
-    end
+		local npcHash = GetHashKey(npc.model)
+		while not HasModelLoaded(npcHash) do
+			RequestModel(npcHash)
+			Citizen.Wait(10)
+		end
+		local npcPed = CreatePed(4, npcHash, npc.coords.x, npc.coords.y, npc.coords.z, npc.coords.heading, false) --False chaque ped est visible par le joueur qui le créer uniquement
+		-- Rend le PED invincible
+		SetEntityInvincible(npcPed, true)
+		-- Empêche le PED de subir des dommages
+		SetEntityCanBeDamaged(npcPed, false)
+		-- Gèle la position du PED, l'empêchant de bouger
+		FreezeEntityPosition(npcPed, true)
+		-- Bloque les événements non temporaires pour le PED (Il réagit à rien)
+		SetBlockingOfNonTemporaryEvents(npcPed, true)
+		if Config.oxtarget then
+			exports.qtarget:AddTargetEntity(npcPed, {
+				options = {
+					{
+						name = 'GoFastVente1',
+						event = 'ed_gofast:openGofastmenu',
+						icon = 'fa-solid fa-user',
+						label = 'Parler',
+					}
+				},
+				distance = 3.0
+			})
+		end
+	end
 end)
   -- fin crer pnj --
   
   -- Ajouter l'interaction avec les PNJ
-
-Citizen.CreateThread(function()
-	while true do
-	  Citizen.Wait(0)
-	  local playerPed = PlayerPedId()
+  RegisterNetEvent('ed_gofast:openGofastmenu')
+  AddEventHandler('ed_gofast:openGofastmenu', function()
+	local playerPed = PlayerPedId()
 	  local playerCoords = GetEntityCoords(playerPed)
 	  for i, npc in ipairs(npcs) do
 		  local distance = #(playerCoords - vector3(npc.coords.x, npc.coords.y, npc.coords.z))
 		  if distance < 3 then
-			--ESX.ShowHelpNotification("Appuyez sur ~INPUT_CONTEXT~", 2000)
-			if IsControlJustReleased(0, Config.KeyIntercation) then
 			  npc.interaction() -- Appeler l'interaction spécifique du PNJ
-			end
 		  end
 	  end
+  end)
+
+Citizen.CreateThread(function()
+	if not Config.oxtarget then
+		while true do
+			Citizen.Wait(0)
+			local playerPed = PlayerPedId()
+			local playerCoords = GetEntityCoords(playerPed)
+			for i, npc in ipairs(npcs) do
+				local distance = #(playerCoords - vector3(npc.coords.x, npc.coords.y, npc.coords.z))
+				if distance < 3 then
+					if IsControlJustReleased(0, Config.KeyIntercation) then
+						npc.interaction() -- Appeler l'interaction spécifique du PNJ
+					end
+				end
+			end
+		end
 	end
   end)
 
@@ -167,6 +192,9 @@ Citizen.CreateThread(function()
 mainMenu.Closed = function()
 	lancer = false
 end
+
+
+
 
 function gofastmenu()
 	local playerPed = PlayerPedId()

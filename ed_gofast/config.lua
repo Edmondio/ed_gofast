@@ -9,6 +9,8 @@ Config = {
     TypeArgent = 'black_money' -- Ici pour change quel type d'argent vous voulez pour payer et pour etre payer argent sale = black_money | argent propre = money
  }
 
+ Config.oxtarget = true
+
  Config.JobsPolice = { 'police', 'bcso' } -- Liste des jobs pour pouvoir lancer le GoFast
 
  Config.Duree = {
