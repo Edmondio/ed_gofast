@@ -25,6 +25,14 @@ https://www.youtube.com/watch?v=YQeKz-PC438
   ensure ed_gofast
   
 ```
+
+## Dependance
+
+```bash
+  Ox_inventory (Non obligatoire)
+  Ox_target (Non obligatoire)
+  LegacyFuel (Non obligatorie)
+```
     
 ## Fonctionnement
 
