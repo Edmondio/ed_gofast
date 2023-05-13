@@ -14,7 +14,7 @@ Voici un Gofast pour Fivem avec menu en RageUI Enti√®rement personnalisable gra√
 ![Logo](https://i.imgur.com/3rGJJFD.png)
 https://www.youtube.com/watch?v=YQeKz-PC438
 
-
+https://discord.gg/EpfWhTshNy
 
 ## Installation
 
