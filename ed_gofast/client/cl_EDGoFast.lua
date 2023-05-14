@@ -542,15 +542,25 @@ function FinDeGoFast(price)
 					ESX.ShowAdvancedNotification("GoFast", "~b~Inconnu", "C'est ok voilà la thunes, débrouille toi avec le vehicule", "CHAR_MULTIPLAYER", 7)
 					Wait(500)
 					TriggerServerEvent("ed_gofast:venteduvehicle", vehe, price)
+					plate = nil
+					vehiclePlate = nil
 				else
 					ESX.ShowAdvancedNotification("", "~b~Inconnu", "Tu as pas la drogue, dégage", "CHAR_MULTIPLAYER", 7)
 				end
 			end, type_drogue, 1)
 		else
-			ESX.ShowAdvancedNotification("", "~b~Inconnu", "Pas intéressé ", "CHAR_MULTIPLAYER", 7)
+			if not vente_possible then
+				ESX.ShowAdvancedNotification("", "~b~Inconnu", "Trop tard, la prochaine fois respect le temps", "CHAR_MULTIPLAYER", 7) -- OK
+			else
+				ESX.ShowAdvancedNotification("", "~b~Inconnu", "C'est pas le bon vehicule ", "CHAR_MULTIPLAYER", 7) -- A voir si c'est utile ou pas
+			end
 		end
 	else
-		ESX.ShowAdvancedNotification("", "~b~Inconnu", "Pas intéressé ", "CHAR_MULTIPLAYER", 7)
+		if vente_possible then
+			ESX.ShowAdvancedNotification("", "~b~Inconnu", "C'est pas le bon vehicule", "CHAR_MULTIPLAYER", 7)
+		else
+			ESX.ShowAdvancedNotification("", "~b~Inconnu", "Pas intéressé ", "CHAR_MULTIPLAYER", 7)
+		end
 	end
 end
 
